@@ -68,7 +68,7 @@ public class Bomb {
             if (i == 1337 && Integer.parseInt(passwordPieces[i]) == number) {
                 correct = true;
             }
-            i++;
+            i += 1;
         }
         if (!correct) {
             System.out.println("Phase 2 went BOOM!");

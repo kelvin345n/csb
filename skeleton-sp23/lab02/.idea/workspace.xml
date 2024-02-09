@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dd3cd28c-ec1e-40b1-b6a1-5607f3cd6dd0" name="Changes" comment="" />
+    <list default="true" id="dd3cd28c-ec1e-40b1-b6a1-5607f3cd6dd0" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/adventure/BeeCountingStage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/adventure/BeeCountingStage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bomb/Bomb.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/bomb/Bomb.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bomb/BombMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/bomb/BombMain.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,9 +18,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 4
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
   <component name="ProjectId" id="2bzvseBshnZR1vcRI2l9dpW3e4M" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -23,16 +28,87 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.AdventureGame.executor": "Run",
+    "Application.BombMain.executor": "Run",
+    "JUnit.AdventureGameTests.executor": "Run",
+    "JUnit.AdventureGameTests.testStageIncorrect.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/nkelv/Desktop/cs61b/skeleton-sp21",
-    "project.structure.last.edited": "Libraries",
+    "last_opened_file_path": "C:/Users/nkelv/OneDrive/Desktop/csb/skeleton-sp23/lab02",
+    "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.0"
+    "project.structure.side.proportion": "0.2"
   }
 }]]></component>
+  <component name="RunManager" selected="Application.AdventureGame">
+    <configuration name="AdventureGame" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="adventure.AdventureGame" />
+      <module name="lab02" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="adventure.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BombMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="bomb.BombMain" />
+      <module name="lab02" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="bomb.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AdventureGameTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="lab02" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="adventure.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="adventure" />
+      <option name="MAIN_CLASS_NAME" value="adventure.AdventureGameTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AdventureGameTests.testStageIncorrect" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="lab02" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="adventure.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="adventure" />
+      <option name="MAIN_CLASS_NAME" value="adventure.AdventureGameTests" />
+      <option name="METHOD_NAME" value="testStageIncorrect(java.lang.String,helpers.CaptureSystemOutput$OutputCapture)" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.AdventureGame" />
+        <item itemvalue="JUnit.AdventureGameTests" />
+        <item itemvalue="JUnit.AdventureGameTests.testStageIncorrect" />
+        <item itemvalue="Application.BombMain" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -50,5 +126,22 @@
       <updated>1707230930167</updated>
     </task>
     <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <condition expression="i == 1337" language="JAVA" />
+          <url>file://$PROJECT_DIR$/src/bomb/Bomb.java</url>
+          <line>67</line>
+          <option name="timeStamp" value="25" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="number" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>
