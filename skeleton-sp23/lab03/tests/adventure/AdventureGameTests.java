@@ -74,5 +74,4 @@ public class AdventureGameTests {
         game.play();
         compareOutputToExpected(GAME_CLASS, capture);
     }
-
 }
