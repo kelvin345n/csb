@@ -43,7 +43,7 @@ public class PercolationStats {
     }
 
     public static void main(String[] args) {
-        int trials = 100, gridSize = 50;
+        int trials = 1000, gridSize = 50;
         PercolationFactory pf = new PercolationFactory();
         PercolationStats ps = new PercolationStats(gridSize, trials, pf);
         System.out.printf("Grid Size: %d x %d | Number of Trials: %d%n", gridSize, gridSize, trials);

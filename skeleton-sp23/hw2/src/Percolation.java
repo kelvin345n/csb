@@ -1,10 +1,12 @@
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
-// TODO: Add any other necessary imports.
 
 public class Percolation {
-    public int openSitesCount;
-    public boolean[][] grid;
+    private int openSitesCount;
+    private boolean[][] grid;
     public WeightedQuickUnionUF wQUset;
+    private WeightedQuickUnionUF wQUset2;
+    private int topIndexQU;
+    private int botIndexQU;
 
     /** creates a boolean grid, size: N by N. And creates a weighted quick union (WQU)
      * of the amount of sites in the grid. For example, in a 5 by 5 grid,
@@ -14,7 +16,10 @@ public class Percolation {
     public Percolation(int N) {
         openSitesCount = 0;
         grid = new boolean[N][N];
-        wQUset = new WeightedQuickUnionUF(N*N);
+        wQUset = new WeightedQuickUnionUF(N*N + 2);
+        wQUset2 = new WeightedQuickUnionUF(N*N + 1);
+        topIndexQU = N*N;
+        botIndexQU = topIndexQU + 1;
     }
 
     /** Opens a specific site by turning it to true, if that site
@@ -25,25 +30,25 @@ public class Percolation {
         if (!isOpen(row, col)){
             grid[row][col] = true;
             openSitesCount++;
-        }
-        if (isValidPosition(row-1, col)){
-            if (isOpen(row-1, col)){
-                wQUset.union(convertRowColumn(row-1, col), convertRowColumn(row, col));
+            connectIfOpen(row-1, col, convertRowColumn(row, col));
+            connectIfOpen(row+1, col, convertRowColumn(row, col));
+            connectIfOpen(row, col-1, convertRowColumn(row, col));
+            connectIfOpen(row, col+1, convertRowColumn(row, col));
+            if (row == 0){
+                wQUset.union(topIndexQU, convertRowColumn(row, col));
+                wQUset2.union(topIndexQU, convertRowColumn(row, col));
+
+            } else if (row == grid.length-1){
+                wQUset.union(botIndexQU, convertRowColumn(row, col));
             }
         }
-        if (isValidPosition(row+1, col)){
-            if (isOpen(row+1, col)){
-                wQUset.union(convertRowColumn(row+1, col), convertRowColumn(row, col));
-            }
-        }
-        if (isValidPosition(row, col-1)){
-            if (isOpen(row, col-1)){
-                wQUset.union(convertRowColumn(row, col-1), convertRowColumn(row, col));
-            }
-        }
-        if (isValidPosition(row, col+1)){
-            if (isOpen(row, col+1)){
-                wQUset.union(convertRowColumn(row, col+1), convertRowColumn(row, col));
+    }
+
+    private void connectIfOpen(int row, int col, int index){
+        if (isValidPosition(row, col)){
+            if (isOpen(row, col)){
+                wQUset.union(convertRowColumn(row, col), index);
+                wQUset2.union(convertRowColumn(row, col), index);
             }
         }
     }
@@ -66,18 +71,11 @@ public class Percolation {
         return grid[row][col];
     }
 
+    /** Returns true if that site is being percolated from the top
+     * else returns false */
     public boolean isFull(int row, int col) {
         checkIndexOutOfBounds(row, col);
-        if (!isOpen(row, col)){
-            return false;
-        } else {
-            for (int i = 0; i < grid.length; i++){
-                if (wQUset.connected(convertRowColumn(row, col), i)){
-                    return true;
-                }
-            }
-            return false;
-        }
+        return wQUset2.connected(convertRowColumn(row, col), topIndexQU);
     }
 
     /** checks if the inputs for row and column are valid for
@@ -97,13 +95,7 @@ public class Percolation {
      * the grid (Row 0) to the bottom (Row N-1) aka the grid
      * "percolates" */
     public boolean percolates() {
-        for (int i = 0; i < grid.length; i++){
-            for (int j = 0; j < grid.length; j++){
-                if (wQUset.connected(i, convertRowColumn(grid.length-1, j))){
-                    return true;
-                }
-            }
-        }
-        return false;
+        return wQUset.connected(topIndexQU, botIndexQU);
     }
 }
+
