@@ -137,7 +137,7 @@ public class BSTMapTest {
     }
 
     @Test
-    public void iteratorTest(){
+    public void removeTest(){
         BSTMap<Integer, String> bst = new BSTMap<>();
         bst.put(2, "two");
         bst.put(4, "four");
@@ -146,8 +146,39 @@ public class BSTMapTest {
         bst.put(8, "eight");
         bst.put(3, "three");
         bst.put(13, "thirteen");
-        bst.put(3, "Three");
-        bst.put(13, "thirteen");
+
+        String actual1 = bst.remove(4);
+        String expected1 = "four";
+        assertThat(actual1).isEqualTo(expected1);
+
+        bst.remove(2);
+        bst.remove(3);
+        bst.remove(8);
+
+        boolean actual2 = bst.containsKey(1);
+        boolean expected2 = true;
+        assertThat(actual2).isEqualTo(expected2);
+
+        boolean actual3 = bst.containsKey(13);
+        boolean expected3 = true;
+        assertThat(actual3).isEqualTo(expected3);
+
+        boolean actual4 = bst.containsKey(5);
+        boolean expected4 = true;
+        assertThat(actual4).isEqualTo(expected4);
+
+        boolean actual5 = bst.containsKey(8);
+        boolean expected5 = false;
+        assertThat(actual5).isEqualTo(expected5);
+
+        boolean actual6 = bst.containsKey(2);
+        boolean expected6 = false;
+        assertThat(actual6).isEqualTo(expected6);
+
+        String actual7 = bst.remove(13);
+        String expected7 = "thirteen";
+        assertThat(actual7).isEqualTo(expected7);
+
 
 
     }

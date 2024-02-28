@@ -114,7 +114,109 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
      */
     @Override
     public V remove(K key) {
-        throw new UnsupportedOperationException();
+        Node removal = findNode(key, root);
+        if (removal == null){
+            return null;
+        }
+        V originalValue = (V) removal.value;
+
+        int numChildren = numberOfChildren(removal);
+        if (removal == root){
+            if (numChildren == 0){
+                root = null;
+            } else if (numChildren == 1){
+                if (removal.left == null ) {
+                    root = removal.right;
+                } else {
+                    root = removal.left;
+                }
+            } else { // two children means Hibbards Deletion
+                Node hibbards = hibbardDeletion(removal);
+                remove((K) hibbards.key);
+                removal.key = hibbards.key;
+                removal.value = hibbards.value;
+            }
+            return originalValue;
+        }
+
+        Node parent = findParent(removal, root);
+        if (removal.key.compareTo(parent.key) < 0){
+            // This means the child is on the left
+            if (numChildren == 0){
+                parent.left = null;
+            } else if (numChildren == 1){
+                if (removal.left == null ) {
+                    parent.left = removal.right;
+                } else {
+                    parent.left = removal.left;
+                }
+            } else { // two children means Hibbards Deletion
+                Node hibbards = hibbardDeletion(removal);
+                remove((K) hibbards.key);
+                removal.key = hibbards.key;
+                removal.value = hibbards.value;
+            }
+        } else {
+            // This means the child is on the right
+            if (numChildren == 0){
+                parent.right = null;
+            } else if (numChildren == 1){
+                if (removal.left == null ) {
+                    parent.right = removal.right;
+                } else {
+                    parent.right = removal.left;
+                }
+            } else { // two children means Hibbards Deletion
+                Node hibbards = hibbardDeletion(removal);
+                remove((K) hibbards.key);
+                removal.key = hibbards.key;
+                removal.value = hibbards.value;
+            }
+        }
+        return originalValue;
+    }
+
+
+    private Node hibbardDeletion(Node n){
+        return hibbardDeletionHelper(n.right);
+    }
+    private Node hibbardDeletionHelper(Node n){
+        if (n.left == null){
+            return n;
+        }
+        return hibbardDeletionHelper(n.left);
+    }
+
+    private Node findNode(K key, Node n){
+        if (n == null){
+            return null;
+        } else if (n.key.compareTo(key) > 0){
+            return findNode(key, n.left);
+        } else if (n.key.compareTo(key) < 0){
+            return findNode(key, n.right);
+        } else {
+            return n;
+        }
+    }
+    private Node findParent(Node child, Node parent){
+        if (child == root) return null;
+        if (parent.left == child || parent.right == child){
+            return parent;
+        } else if (parent.key.compareTo(child.key) > 0){
+            return findParent(child, parent.left);
+        } else {
+            return findParent(child, parent.right);
+        }
+    }
+    private int numberOfChildren(Node n){
+        int count = 0;
+        if (n.left != null){
+            count++;
+        }
+        if (n.right != null){
+            count++;
+        }
+        return count;
     }
 
 
@@ -132,19 +234,10 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     public static void main(String[] args) {
         BSTMap<Integer, String> bst = new BSTMap<>();
         bst.put(5, "five");
-        bst.put(8, "eight");
         bst.put(3, "three");
         bst.put(2, "two");
         bst.put(4, "four");
         bst.put(1, "one");
-        bst.put(7, "seven");
-        bst.put(10, "ten");
-        bst.put(6, "six");
-        bst.put(9, "nine");
-        bst.put(11, "eleven");
-        bst.put(13, "thirteen");
-        bst.put(14, "fourteen");
-        bst.put(12, "twelve");
-        bst.clear();
+        String remove = bst.remove(5);
     }
 }
