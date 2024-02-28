@@ -1,7 +1,6 @@
 import edu.princeton.cs.algs4.BST;
 
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     private int size = 0;
@@ -101,7 +100,17 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
      */
     @Override
     public Set<K> keySet() {
-        throw new UnsupportedOperationException();
+        Set<K> returnSet = new LinkedHashSet<>();
+        keySetHelper(root, returnSet);
+        return returnSet;
+    }
+    private void keySetHelper(Node n, Set set){
+        if (n == null){
+            return;
+        }
+        keySetHelper(n.left, set);
+        set.add(n.key);
+        keySetHelper(n.right, set);
     }
 
     /**
@@ -119,8 +128,8 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
             return null;
         }
         V originalValue = (V) removal.value;
-
         int numChildren = numberOfChildren(removal);
+
         if (removal == root){
             if (numChildren == 0){
                 root = null;
@@ -131,15 +140,16 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
                     root = removal.left;
                 }
             } else { // two children means Hibbards Deletion
-                Node hibbards = hibbardDeletion(removal);
-                remove((K) hibbards.key);
-                removal.key = hibbards.key;
-                removal.value = hibbards.value;
+                hibbardDeletion(removal);
             }
             return originalValue;
         }
 
+        // If the removal node is not the root and exists, then
+        // it must have a parent that is not null.
         Node parent = findParent(removal, root);
+
+        // Determines if the child is on the left or the right of the parent.
         if (removal.key.compareTo(parent.key) < 0){
             // This means the child is on the left
             if (numChildren == 0){
@@ -151,10 +161,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
                     parent.left = removal.left;
                 }
             } else { // two children means Hibbards Deletion
-                Node hibbards = hibbardDeletion(removal);
-                remove((K) hibbards.key);
-                removal.key = hibbards.key;
-                removal.value = hibbards.value;
+                hibbardDeletion(removal);
             }
         } else {
             // This means the child is on the right
@@ -167,18 +174,19 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
                     parent.right = removal.left;
                 }
             } else { // two children means Hibbards Deletion
-                Node hibbards = hibbardDeletion(removal);
-                remove((K) hibbards.key);
-                removal.key = hibbards.key;
-                removal.value = hibbards.value;
+                hibbardDeletion(removal);
             }
         }
         return originalValue;
     }
 
-
-    private Node hibbardDeletion(Node n){
-        return hibbardDeletionHelper(n.right);
+    /** Finds the node that should replace the removable node.
+     * The logic for the deletion is in the remove() method */
+    private void hibbardDeletion(Node removal){
+        Node successor =  hibbardDeletionHelper(removal.right);
+        remove((K) successor.key);
+        removal.key = successor.key;
+        removal.value = successor.value;
     }
     private Node hibbardDeletionHelper(Node n){
         if (n.left == null){
@@ -187,6 +195,9 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         return hibbardDeletionHelper(n.left);
     }
 
+    /** Finds and returns a node when given a key and the root node
+     * Null if none found.
+     * */
     private Node findNode(K key, Node n){
         if (n == null){
             return null;
@@ -198,6 +209,9 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
             return n;
         }
     }
+
+    /** When given a node, such as removal. This method finds the "child"
+     * node's "parent" and returns it. */
     private Node findParent(Node child, Node parent){
         if (child == root) return null;
         if (parent.left == child || parent.right == child){
@@ -208,6 +222,8 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
             return findParent(child, parent.right);
         }
     }
+
+    /** Calculates the number of children a node has */
     private int numberOfChildren(Node n){
         int count = 0;
         if (n.left != null){
@@ -219,25 +235,34 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         return count;
     }
 
-
+    
     /**
      * Returns an iterator over elements of type {@code T}.
-     *
      * @return an Iterator.
      */
     @Override
     public Iterator<K> iterator() {
-       throw new UnsupportedOperationException();
+       return keySet().iterator();
     }
-
 
     public static void main(String[] args) {
         BSTMap<Integer, String> bst = new BSTMap<>();
         bst.put(5, "five");
+        bst.put(8, "eight");
         bst.put(3, "three");
         bst.put(2, "two");
         bst.put(4, "four");
         bst.put(1, "one");
-        String remove = bst.remove(5);
+        bst.put(7, "seven");
+        bst.put(10, "ten");
+        bst.put(6, "six");
+        bst.put(9, "nine");
+        bst.put(11, "eleven");
+        bst.put(13, "thirteen");
+        bst.put(14, "fourteen");
+        bst.put(12, "twelve");
+        for (int i: bst){
+            System.out.print(bst.get(i) + " ");
+        }
     }
 }
