@@ -179,8 +179,6 @@ public class BSTMapTest {
         String expected7 = "thirteen";
         assertThat(actual7).isEqualTo(expected7);
 
-
-
     }
 
 }
