@@ -178,7 +178,6 @@ public class BSTMapTest {
         String actual7 = bst.remove(13);
         String expected7 = "thirteen";
         assertThat(actual7).isEqualTo(expected7);
-
     }
 
 }

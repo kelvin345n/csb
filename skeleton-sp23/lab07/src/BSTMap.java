@@ -71,7 +71,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
      */
     @Override
     public boolean containsKey(K key) {
-        if (get(key) == null){
+        if (findNode(key, root) == null){
             return false;
         }
         return true;
@@ -127,6 +127,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         if (removal == null){
             return null;
         }
+        size -= 1;
         V originalValue = (V) removal.value;
         int numChildren = numberOfChildren(removal);
 
@@ -235,7 +236,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         return count;
     }
 
-    
+
     /**
      * Returns an iterator over elements of type {@code T}.
      * @return an Iterator.
