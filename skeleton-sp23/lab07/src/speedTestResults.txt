@@ -1,0 +1,10 @@
+In the random order, my BSTMap was slightly slower
+but on par with Java's TreeMap as N got larger. Java's
+HashMap has me beat though. The ULLMap suffered a
+stackoverflow as N got very large.
+
+In the ordered speed test, where items were inserted lexigraphically
+in order, my BSTMap and the ULLMap both suffered stack overflows
+as N got very large. While Java's TreeMap and HashMap took a few seconds
+to solve. This is because the BST basically transposed into
+a linked list as this implementation has no way to self-balance.
