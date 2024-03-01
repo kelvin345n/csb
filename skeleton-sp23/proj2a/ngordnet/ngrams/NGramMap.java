@@ -1,7 +1,11 @@
 package ngordnet.ngrams;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.NoSuchElementException;
 
+import edu.princeton.cs.algs4.In;
 /**
  * An object that provides utility methods for making queries on the
  * Google NGrams dataset (or a subset thereof).
@@ -16,13 +20,65 @@ public class NGramMap {
 
     private static final int MIN_YEAR = 1400;
     private static final int MAX_YEAR = 2100;
+
     // TODO: Add any necessary static/instance variables.
+
+    private final String wordsFilename;
+    private final String countsFilename;
+
+    // Records a HashMap of the word that corresponds to its TimeSeries
+    Map<String, TimeSeries> wordsMap;
+
+    // Records the total amount of words in that year. <year, frequency of word>
+    TimeSeries totalFrequency;
 
     /**
      * Constructs an NGramMap from WORDSFILENAME and COUNTSFILENAME.
      */
     public NGramMap(String wordsFilename, String countsFilename) {
-        // TODO: Fill in this constructor. See the "NGramMap Tips" section of the spec for help.
+        this.wordsFilename = wordsFilename;
+        this.countsFilename = countsFilename;
+
+        wordsMap = new HashMap<>();
+        totalFrequency = new TimeSeries();
+        readCountFile();
+        readWordsFile();
+    }
+
+    /** Reads in the COUNTSFILENAME and populates the totalFrequency TimeSeries */
+    private void readCountFile(){
+        In in = new In(countsFilename);
+
+        while(in.hasNextLine()){
+            String line = in.readLine();
+            String[] parts = line.split(",");
+
+            int year = Integer.parseInt(parts[0]);
+            double frequency = Double.parseDouble(parts[1]);
+
+            totalFrequency.put(year, frequency);
+        }
+    }
+    /** Reads in WORDSFILENAME and populates the wordsMap HashMap */
+    private void readWordsFile() {
+        In in = new In(wordsFilename);
+
+        while (in.hasNextLine()) {
+            String line = in.readLine();
+            String[] parts = line.split("\\s+");
+
+            String word = parts[0];
+            int year = Integer.parseInt(parts[1]);
+            double frequency = Double.parseDouble(parts[2]);
+
+            // If word is not in WORDSMAP then create a time series for it and put it into WORDSMAP
+            if (!wordsMap.containsKey(word)) {
+                wordsMap.put(word, new TimeSeries());
+            }
+            // For the specific WORD this is its corresponding TimeSeries in the wordsMap
+            TimeSeries wordTimeSeries = wordsMap.get(word);
+            wordTimeSeries.put(year, frequency);
+        }
     }
 
     /**
@@ -32,8 +88,11 @@ public class NGramMap {
      * NGramMap. This is also known as a "defensive copy".
      */
     public TimeSeries countHistory(String word, int startYear, int endYear) {
-        // TODO: Fill in this method.
-        return null;
+        TimeSeries wordSeries = wordsMap.get(word);
+        if (wordSeries == null){
+            return null;
+        }
+        return new TimeSeries(wordSeries, startYear, endYear);
     }
 
     /**
@@ -43,16 +102,18 @@ public class NGramMap {
      * NGramMap. This is also known as a "defensive copy".
      */
     public TimeSeries countHistory(String word) {
-        // TODO: Fill in this method.
-        return null;
+        TimeSeries wordSeries = wordsMap.get(word);
+        if (wordSeries == null){
+            return null;
+        }
+        return new TimeSeries(wordSeries, MIN_YEAR, MAX_YEAR);
     }
 
     /**
      * Returns a defensive copy of the total number of words recorded per year in all volumes.
      */
     public TimeSeries totalCountHistory() {
-        // TODO: Fill in this method.
-        return null;
+        return new TimeSeries(totalFrequency, MIN_YEAR, MAX_YEAR);
     }
 
     /**
@@ -60,8 +121,12 @@ public class NGramMap {
      * and ENDYEAR, inclusive of both ends.
      */
     public TimeSeries weightHistory(String word, int startYear, int endYear) {
-        // TODO: Fill in this method.
-        return null;
+        TimeSeries wordSeries = wordsMap.get(word);
+        if (wordSeries == null){
+            return new TimeSeries();
+        }
+        TimeSeries tempSeries = new TimeSeries(wordSeries, startYear, endYear);
+        return tempSeries.dividedBy(totalFrequency);
     }
 
     /**
@@ -70,8 +135,11 @@ public class NGramMap {
      * TimeSeries.
      */
     public TimeSeries weightHistory(String word) {
-        // TODO: Fill in this method.
-        return null;
+        TimeSeries wordSeries = wordsMap.get(word);
+        if (wordSeries == null){
+            return new TimeSeries();
+        }
+        return wordSeries.dividedBy(totalFrequency);
     }
 
     /**
@@ -81,18 +149,29 @@ public class NGramMap {
      */
     public TimeSeries summedWeightHistory(Collection<String> words,
                                           int startYear, int endYear) {
-        // TODO: Fill in this method.
-        return null;
+        TimeSeries returnSeries = new TimeSeries();
+        for (String word : words){
+            TimeSeries wordSeries = wordsMap.get(word);
+            if (wordSeries == null){
+                continue;
+            }
+            returnSeries = returnSeries.plus(weightHistory(word));
+        }
+        return new TimeSeries(returnSeries, startYear, endYear);
     }
 
     /**
      * Returns the summed relative frequency per year of all words in WORDS.
      */
     public TimeSeries summedWeightHistory(Collection<String> words) {
-        // TODO: Fill in this method.
-        return null;
+        TimeSeries returnSeries = new TimeSeries();
+        for (String word : words){
+            TimeSeries wordSeries = wordsMap.get(word);
+            if (wordSeries == null){
+                continue;
+            }
+            returnSeries = returnSeries.plus(weightHistory(word));
+        }
+        return new TimeSeries(returnSeries, MIN_YEAR, MAX_YEAR);
     }
-
-    // TODO: Add any private helper methods.
-    // TODO: Remove all TODO comments before submitting.
 }

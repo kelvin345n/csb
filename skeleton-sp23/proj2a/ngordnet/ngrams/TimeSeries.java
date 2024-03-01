@@ -1,5 +1,8 @@
 package ngordnet.ngrams;
 
+import net.sf.saxon.expr.Component;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -13,7 +16,6 @@ public class TimeSeries extends TreeMap<Integer, Double> {
 
     private static final int MIN_YEAR = 1400;
     private static final int MAX_YEAR = 2100;
-    // TODO: Add any necessary static/instance variables.
 
     /**
      * Constructs a new empty TimeSeries.
@@ -28,24 +30,30 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      */
     public TimeSeries(TimeSeries ts, int startYear, int endYear) {
         super();
-        // TODO: Fill in this constructor.
+        for (int i : ts.keySet()){
+            if (i >= startYear && i <= endYear){
+                this.put(i, ts.get(i));
+            }
+        }
     }
 
     /**
-     * Returns all years for this TimeSeries (in any order).
+     * Returns all years for this TimeSeries (in any order). ;
      */
     public List<Integer> years() {
-        // TODO: Fill in this method.
-        return null;
+        return new ArrayList<>(keySet());
     }
 
     /**
      * Returns all data for this TimeSeries (in any order).
-     * Must be in the same order as years().
+     * Must be in the same order as years(). ;
      */
     public List<Double> data() {
-        // TODO: Fill in this method.
-        return null;
+        List<Double> dataList = new ArrayList<>();
+        for (int i: years()){
+            dataList.add(this.get(i));
+        }
+        return dataList;
     }
 
     /**
@@ -58,8 +66,15 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      * should store the value from the TimeSeries that contains that year.
      */
     public TimeSeries plus(TimeSeries ts) {
-        // TODO: Fill in this method.
-        return null;
+        TimeSeries newSeries = new TimeSeries(this, MIN_YEAR, MAX_YEAR);
+        for (int i: ts.years()){
+            if (newSeries.get(i) == null){
+                newSeries.put(i, ts.get(i));
+            } else {
+                newSeries.put(i, newSeries.get(i) + ts.get(i));
+            }
+        }
+        return newSeries;
     }
 
     /**
@@ -72,10 +87,14 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      * If TS has a year that is not in this TimeSeries, ignore it.
      */
     public TimeSeries dividedBy(TimeSeries ts) {
-        // TODO: Fill in this method.
-        return null;
+        TimeSeries dividedSeries = new TimeSeries();
+        for (int i : years()){
+            if (ts.get(i) == null){
+                throw new IllegalArgumentException();
+            } else {
+                dividedSeries.put(i, (double)get(i) / ts.get(i));
+            }
+        }
+        return dividedSeries;
     }
-
-    // TODO: Add any private helper methods.
-    // TODO: Remove all TODO comments before submitting.
 }
