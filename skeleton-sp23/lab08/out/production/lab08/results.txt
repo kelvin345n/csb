@@ -13,10 +13,10 @@ InsertInOrderSpeedTest:
     3. Java's HashMap: 0.00 sec      0.01 sec       0.06 sec       0.40 sec         4.42 sec
 
 BucketsSpeedTest:
-      Input:                   100 Strings     10,000        100,000        1,000,000        5,000,000
+      Input:                   100 Strings     10,000        100,000        1,000,000        10,000,000
       =================================================================================================
-    1. ArrayList buckets:       0.01 sec      0.05 sec       0.13 sec       1.15 sec         9.22 sec
-    2. LinkedList buckets:      0.01 sec      0.04 sec       0.12 sec       1.33 sec         8.03 sec
-    3. HashSet buckets:         0.00 sec      0.02 sec       0.18 sec       1.81 sec         15.18 sec
-    4. Stack buckets:           0.00 sec      0.02 sec       0.16 sec       1.46 sec         10.96 sec
-    5. ArrayDeque buckets:      0.00 sec      0.02 sec       0.16 sec       1.37 sec         12.07 sec
+    1. ArrayList buckets:       0.01 sec      0.05 sec       0.13 sec       1.15 sec         16.03 sec
+    2. LinkedList buckets:      0.01 sec      0.04 sec       0.12 sec       1.33 sec         21.00 sec
+    3. HashSet buckets:         0.00 sec      0.02 sec       0.18 sec       1.81 sec         Too
+    4. Stack buckets:           0.00 sec      0.02 sec       0.16 sec       1.46 sec         0 sec
+    5. ArrayDeque buckets:      0.00 sec      0.02 sec       0.16 sec       1.37 sec         0 sec
