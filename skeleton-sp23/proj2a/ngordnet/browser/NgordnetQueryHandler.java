@@ -43,7 +43,7 @@ public abstract class NgordnetQueryHandler implements Route {
         try {
             k = Integer.parseInt(qm.get("k").value());
         } catch(RuntimeException e) {
-            k = 1;
+            k = 0;
         }
 
         return new ngordnet.browser.NgordnetQuery(words, startYear, endYear, k);

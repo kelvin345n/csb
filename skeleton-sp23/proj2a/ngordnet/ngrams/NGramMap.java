@@ -21,7 +21,6 @@ public class NGramMap {
     private static final int MIN_YEAR = 1400;
     private static final int MAX_YEAR = 2100;
 
-    // TODO: Add any necessary static/instance variables.
 
     private final String wordsFilename;
     private final String countsFilename;
@@ -35,8 +34,8 @@ public class NGramMap {
     /**
      * Constructs an NGramMap from WORDSFILENAME and COUNTSFILENAME.
      */
-    public NGramMap(String wordsFilename, String countsFilename) {
-        this.wordsFilename = wordsFilename;
+    public NGramMap(String wordFilename, String countsFilename) {
+        this.wordsFilename = wordFilename;
         this.countsFilename = countsFilename;
 
         wordsMap = new HashMap<>();
@@ -175,3 +174,5 @@ public class NGramMap {
         return new TimeSeries(returnSeries, MIN_YEAR, MAX_YEAR);
     }
 }
+
+
